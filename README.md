@@ -22,21 +22,28 @@ A discord bot to dispense/manage links. V2 supports logging, better history, bet
    ```
 
 ## Configuration
+1. Create a .env file (follow the example.env)
+```env
+// Config
+ADMIN_ROLE = 
+LOG_WEBHOOK_URL = 
+REPORT_CHANNEL= 
 
-1. Open the `config.json` file and configure the following settings:
+// Discord Bot Information
+DISCORD_TOKEN = 
+DISCORD_APPLICATION_ID= 
+GUILD_ID = 
 
-   - `db.uri`: MongoDB connection URI.
-   - `bot.token`: Discord bot token.
-   - `bot.client_id`: Discord bot client ID.
-   - `bot.guild_id`: Discord guild ID. 
-   -  Fill in all the blank/non-filled values in the config.json as well. 
+// DB Info
+MONGODB_URI = 
+```
 
 ## Running the Bot
 
 1. Start the bot:
 
    ```bash
-   node index.js
+   node bot
    ```
 
   And You're Done. Your server's links will be handled with great care with this Dispenser!
