@@ -8,7 +8,7 @@ config();
 const initializeLinksAndDB = async () => {
     const connectDB = async () => {
         try {
-            await mongoose.connect(process.env.MONGODB_URI, { dbName: 'NewDispenser' });
+            await mongoose.connect(process.env.MONGODB_URI, { dbName: 'ShadowDispenser' });
             console.log('Connected to database');
         } catch (error) {
             console.error('Error connecting to database:', error);
