@@ -31,16 +31,26 @@ const registerCommands = async (client) => {
 
     client.on(Discord.Events.InteractionCreate, async (interaction) => {
         if (!interaction.isChatInputCommand()) return;
+        
         const member = interaction.member;
-        if (!member.roles.cache.has(process.env.ADMIN_ROLE)) {
-            await interaction.reply({ content: "You are not allowed to run this command.", ephemeral: true });
-            return;
+        const commandName = interaction.commandName;
+    
+        if (commandName === 'addlink') {
+            if (!member.roles.cache.has(process.env.ADMIN_ROLE) && !member.roles.cache.has('1341164622232813598')) {
+                await interaction.reply({ content: "You are not allowed to run this command.", ephemeral: true });
+                return;
+            }
+        } else {
+            if (!member.roles.cache.has(process.env.ADMIN_ROLE)) {
+                await interaction.reply({ content: "You are not allowed to run this command.", ephemeral: true });
+                return;
+            }
         }
-        const command = commands.get(interaction.commandName);
-
+    
+        const command = commands.get(commandName);
         command.handler(interaction, client);
-    });
-}
+});
+
 
 export {
     registerCommands as default
