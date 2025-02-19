@@ -51,7 +51,4 @@ const registerCommands = async (client) => {
         command.handler(interaction, client);
 });
 
-
-export {
-    registerCommands as default
-};
+export default registerCommands;
