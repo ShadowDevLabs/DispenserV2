@@ -1,5 +1,4 @@
-import Discord from 'discord.js';
-
+import { Collection, REST, Routes, Events } from 'discord.js';
 import path from 'node:path';
 import url from 'node:url';
 import fs from 'node:fs';
@@ -11,7 +10,7 @@ const __dirname = url.fileURLToPath(new URL('../', import.meta.url));
  */
 const registerCommands = async (client) => {
     const files = fs.readdirSync(path.join(__dirname, 'commands')).filter((file) => file !== 'index.js');
-    const commands = new Discord.Collection();
+    const commands = new Collection();
     const commandsMeta = [];
 
     for (let i = 0; i < files.length; i++) {
@@ -22,14 +21,14 @@ const registerCommands = async (client) => {
     }
 
     client.on('ready', async () => {
-        await new Discord.REST()
+        await new REST()
             .setToken(process.env.DISCORD_TOKEN)
-            .put(Discord.Routes.applicationGuildCommands(process.env.DISCORD_APPLICATION_ID, process.env.GUILD_ID), {
+            .put(Routes.applicationGuildCommands(process.env.DISCORD_APPLICATION_ID, process.env.GUILD_ID), {
                 body: commandsMeta
             });
     });
 
-    client.on(Discord.Events.InteractionCreate, async (interaction) => {
+    client.on(Events.InteractionCreate, async (interaction) => {
         if (!interaction.isChatInputCommand()) return;
         
         const member = interaction.member;
@@ -48,7 +47,8 @@ const registerCommands = async (client) => {
         }
     
         const command = commands.get(commandName);
-        command.handler(interaction, client);
-});
+        await command.handler(interaction, client);
+    });
+};
 
 export default registerCommands;
